@@ -157,15 +157,6 @@ const NOTIF_SCHEDULE = [
 
   const todayKey = new Date().toDateString();
 
-  const isPWA =
-  window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true;
-
-if (isPWA) {
-  document.body.classList.add("pwa-mode");
-}
-
-
   // --- DAILY RESET ---
   if (localStorage.getItem("lastDay") !== todayKey) {
     localStorage.setItem("lastDay", todayKey);
@@ -324,13 +315,6 @@ enableBtn.onclick = () => {
   });
 };
 
-if ("Notification" in window) {
-  // existing notification logic
-} else {
-  console.log("Notifications not supported");
-}
-
-
 
   // --- WEEKLY PHOTO UPLOAD ---
   const photoInput = document.getElementById("photoInput");
@@ -360,11 +344,3 @@ if ("Notification" in window) {
     reader.readAsDataURL(file);
   });
 });
-
-const isStandalone =
-  window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true;
-
-if (!isStandalone) {
-  document.body.classList.add("website-mode");
-}
