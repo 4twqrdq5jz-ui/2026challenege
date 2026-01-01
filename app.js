@@ -100,28 +100,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- NOTIFICATION MODAL ---
   const notifModal = document.getElementById("notifModal");
-  const enableBtn = document.getElementById("enableNotif");
-  const skipBtn = document.getElementById("skipNotif");
+const enableBtn = document.getElementById("enableNotif");
+const skipBtn = document.getElementById("skipNotif");
 
-  function checkNotificationPermission() {
-    if (!("Notification" in window)) return;
-    const skippedDay = localStorage.getItem("notifSkipped");
-    if (Notification.permission === "default" && skippedDay !== todayKey) {
-      notifModal.classList.remove("notif-hidden");
-    }
+// Show modal only if notifications not granted and not skipped today
+function checkNotificationPermission() {
+  if (!("Notification" in window)) return;
+
+  const skippedDay = localStorage.getItem("notifSkipped");
+  const todayKey = new Date().toDateString();
+
+  if (Notification.permission === "granted") {
+    // Notifications already allowed — hide modal permanently
+    notifModal.remove();
+    return;
   }
-  checkNotificationPermission();
 
-  enableBtn.onclick = () => {
+  if (Notification.permission === "default" && skippedDay !== todayKey) {
+    notifModal.classList.remove("notif-hidden");
+  }
+}
+
+checkNotificationPermission();
+
+// Enable notifications
+enableBtn.onclick = () => {
   Notification.requestPermission().then(permission => {
-    if (permission === "granted") notifModal.classList.add("notif-hidden");
+    if (permission === "granted") {
+      // Remove modal completely after allowing
+      notifModal.remove();
+    }
   });
 };
 
-  skipBtn.onclick = () => {
-    localStorage.setItem("notifSkipped", todayKey);
-    notifModal.classList.add("notif-hidden");
-  };
+// Skip for today
+skipBtn.onclick = () => {
+  localStorage.setItem("notifSkipped", new Date().toDateString());
+  notifModal.classList.add("notif-hidden");
+};
+
 
   // --- WEEKLY PHOTO UPLOAD ---
   const photoInput = document.getElementById("photoInput");
