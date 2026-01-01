@@ -1,83 +1,270 @@
-/* ======================
-   WEBSITE (DEFAULT)
-====================== */
+/* =========================
+   Liquid Glass Base
+========================= */
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.35);
+  --accent: #00ff88;
+  --text-muted: rgba(255, 255, 255, 0.65);
+}
+
+/* =========================
+   Body
+========================= */
 
 body {
-  background: #0f0f0f;
-  color: #ffffff;
-}
-
-header {
-  background: #111;
-  border-bottom: 1px solid #222;
-}
-
-section,
-#streakBox {
-  background: #1a1a1a;
-  border: 1px solid #222;
-  box-shadow: none;
-}
-
-footer {
-  background: #000;
-  border-top: 1px solid #222;
-}
-
-#saveDay {
-  background: #00ff88;
-  color: #000;
-  border-radius: 24px;
-}
-
-/* ======================
-   PWA LIQUID GLASS
-====================== */
-
-body.pwa-mode {
+  margin: 0;
+  padding-bottom: 90px;
   background:
     radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+  color: #fff;
+  overscroll-behavior: none;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Glass cards */
-body.pwa-mode section,
-body.pwa-mode #streakBox {
-  background: rgba(255, 255, 255, 0.08);
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================
+   Header
+========================= */
+
+header {
+  padding: 24px 20px;
+  text-align: center;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 12px 30px rgba(0, 0, 0, 0.45);
-}
-
-/* Header glass */
-body.pwa-mode header {
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.08),
     rgba(255, 255, 255, 0.02)
   );
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid var(--glass-border);
 }
 
-/* Footer glass */
-body.pwa-mode footer {
+.subtitle {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* =========================
+   Streak Box
+========================= */
+
+#streakBox {
+  margin: 16px;
+  padding: 14px;
+  text-align: center;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   Sections (Cards)
+========================= */
+
+section {
+  margin: 18px;
+  padding: 18px;
+  border-radius: 18px;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+section h2 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+  letter-spacing: 0.3px;
+}
+
+/* =========================
+   Checklist Items
+========================= */
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-size: 0.95rem;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border);
+
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  transform: scale(0);
+  transition: transform 0.15s ease-out;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+input[type="checkbox"]:checked::after {
+  transform: scale(1);
+}
+
+/* Bullet details under checklist */
+.details {
+  margin-left: 34px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.details li {
+  margin: 4px 0;
+}
+
+/* =========================
+   Photo Gallery
+========================= */
+
+#photoGallery img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* =========================
+   Footer / Save Button
+========================= */
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 16px;
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.8),
     rgba(0, 0, 0, 0.35)
   );
   backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-top: 1px solid var(--glass-border);
 }
 
-/* Button glow */
-body.pwa-mode #saveDay {
-  background: linear-gradient(to bottom, #3cffb0, #00cc77);
+#saveDay {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 24px;
+  background: linear-gradient(
+    to bottom,
+    #3cffb0,
+    #00cc77
+  );
+  color: #000;
+
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 10px 25px rgba(0, 255, 136, 0.35);
+}
+
+/* =========================
+   Notification Modal
+========================= */
+
+#notifModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.notif-hidden {
+  display: none;
+}
+
+.notif-box {
+  max-width: 320px;
+  padding: 22px;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.notif-box h2 {
+  margin-top: 0;
+}
+
+.notif-box button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+#enableNotif {
+  background: linear-gradient(to bottom, #3cffb0, #00cc77);
+  color: #000;
+  font-weight: 600;
+}
+
+#skipNotif {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
 }
