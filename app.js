@@ -76,8 +76,22 @@ document.getElementById("saveDay").onclick = () => {
     alert("⚠️ You haven’t completed everything today.");
     return;
   }
+  const yesterday = localStorage.getItem("lastCompletedDay");
+  const today = new Date().toDateString();
 
-  alert("🔥 Day completed. Discipline respected.");
+  if (yesterday === new Date(Date.now() - 86400000).toDateString()) {
+    streak++;
+  } else {
+    streak = 1;
+  }
+
+  bestStreak = Math.max(bestStreak, streak);
+
+  localStorage.setItem("streak", streak);
+  localStorage.setItem("bestStreak", bestStreak);
+  localStorage.setItem("lastCompletedDay", today);
+
+  alert("🔥 Day completed. Streak maintained.");
 };
 
 // Notifications
@@ -94,3 +108,89 @@ setInterval(() => {
     });
   }
 }, 1000 * 60 * 60); // hourly reminder
+let streak = Number(localStorage.getItem("streak") || 0);
+let bestStreak = Number(localStorage.getItem("bestStreak") || 0);
+
+document.getElementById("streak").textContent = streak;
+document.getElementById("bestStreak").textContent = bestStreak;
+const firebaseConfig = {
+  apiKey: "AIzaSyDQwlDjIGA2whvBDhOeLrnseQB4EoP7EcA",
+  authDomain: "mainsite-eb919.firebaseapp.com",
+  databaseURL: "https://mainsite-eb919-default-rtdb.firebaseio.com",
+  projectId: "mainsite-eb919",
+  storageBucket: "mainsite-eb919.firebasestorage.app",
+  messagingSenderId: "799554641103",
+  appId: "1:799554641103:web:f23b774cbb08e03aebebba",
+  measurementId: "G-SXQHBNGQBF"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
+
+const user = await signInAnonymously(auth);
+const uid = user.user.uid;
+
+async function saveToCloud(data) {
+  await setDoc(doc(db, "users", uid), data);
+}
+
+async function loadFromCloud() {
+  const snap = await getDoc(doc(db, "users", uid));
+  return snap.exists() ? snap.data() : null;
+}
+
+saveToCloud({
+  streak,
+  bestStreak,
+  completed: todayKey
+});
+
+document.getElementById("photoInput").addEventListener("change", async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const week = `week-${new Date().getWeek?.() || Date.now()}`;
+  const storageRef = ref(storage, `progress/${uid}/${week}.jpg`);
+
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+
+  document.getElementById("photoGallery").innerHTML += `<img src="${url}">`;
+});
+
+const notifModal = document.getElementById("notifModal");
+const enableBtn = document.getElementById("enableNotif");
+const skipBtn = document.getElementById("skipNotif");
+
+// Only show if notifications not allowed
+function checkNotificationPermission() {
+  if (!("Notification" in window)) return;
+
+  if (Notification.permission === "default") {
+    notifModal.classList.remove("notif-hidden");
+  }
+}
+
+checkNotificationPermission();
+
+// Enable button
+enableBtn.onclick = async () => {
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    notifModal.classList.add("notif-hidden");
+  }
+};
+
+// Skip button (hide until next day)
+skipBtn.onclick = () => {
+  localStorage.setItem("notifSkipped", new Date().toDateString());
+  notifModal.classList.add("notif-hidden");
+};
+
+// Prevent showing again same day if skipped
+const skippedDay = localStorage.getItem("notifSkipped");
+if (skippedDay === new Date().toDateString()) {
+  notifModal.classList.add("notif-hidden");
+}
