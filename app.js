@@ -128,37 +128,6 @@ function checkNotificationPermission() {
   }
 }
 
-const testNotifBtn = document.getElementById("testNotif");
-
-testNotifBtn.onclick = () => {
-  if (!("Notification" in window)) {
-    alert("Notifications not supported in this browser.");
-    return;
-  }
-
-  if (Notification.permission === "granted") {
-    new Notification("🔥 Test Notification", {
-      body: "This is a test notification. Your app notifications are working!",
-      icon: "" // optional: path to icon.png
-    });
-  } else if (Notification.permission === "default") {
-    // Ask for permission if not granted yet
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        new Notification("🔥 Test Notification", {
-          body: "This is a test notification. Your app notifications are working!",
-          icon: ""
-        });
-      } else {
-        alert("Notifications not allowed.");
-      }
-    });
-  } else {
-    alert("Notifications are blocked. Please enable them in your browser settings.");
-  }
-};
-
-
 checkNotificationPermission();
 
 // Enable notifications
