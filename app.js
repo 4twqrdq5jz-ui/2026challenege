@@ -1,41 +1,97 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- DATA ---
   const DATA = {
-    "Body / Workouts": [
-      "Morning warm-up",
-      "Core routine",
-      "Balance drills",
-      "Lower body workout",
-      "Upper body workout",
-      "Cardio",
-      "Stretching"
-    ],
-    "Diet / Hydration": [
-      "Meal 1",
-      "Meal 2",
-      "Meal 3",
-      "Meal 4",
-      "Optional snack",
-      "64–100 oz water"
-    ],
-    "Hair / 4C Care": [
-      "Scalp massage",
-      "Moisturize + seal",
-      "Satin/durag"
-    ],
-    "Hygiene": [
-      "Brush & floss",
-      "Shower",
-      "Deodorant",
-      "Face care",
-      "Hands & nails"
-    ],
-    "Mindset": [
-      "Posture check",
-      "Engage core",
-      "Daily focus check-in"
-    ]
-  };
+  "Body / Workouts": [
+    {
+      title: "Morning warm-up",
+      details: ["5–7 min: jumping jacks, high knees, hip circles", "🔁 Daily"]
+    },
+    {
+      title: "Core routine",
+      details: ["Plank 60s ×3", "Side plank 30s ×3", "Dead bugs 3×20", "Hollow holds 20–30s ×3", "🔁 Daily"]
+    },
+    {
+      title: "Balance drills",
+      details: ["Single-leg stand 1–2 min each leg", "Heel-toe walk 2–3 min", "🔁 Daily"]
+    },
+    {
+      title: "Squats",
+      details: ["300–500 reps (mix regular, sumo, pulse, split)", "🔁 Mon–Sat"]
+    },
+    {
+      title: "Glute bridges",
+      details: ["4×30 reps", "🔁 Mon–Sat"]
+    },
+    {
+      title: "Wall sits",
+      details: ["2–3 min", "🔁 Mon–Sat"]
+    },
+    {
+      title: "Lunges",
+      details: ["100 total", "🔁 Mon–Sat"]
+    },
+    {
+      title: "Dips (chairs/bench)",
+      details: ["3–5×10–20 reps", "🔁 Mon–Fri"]
+    },
+    {
+      title: "Arm curls (weighted items)",
+      details: ["3–5×12–20 each arm", "🔁 Mon–Fri"]
+    },
+    {
+      title: "Chest fly (weighted)",
+      details: ["3–4×12–15 reps", "🔁 Mon–Fri"]
+    },
+    {
+      title: "Reverse flies / rows / shrugs for shoulders/back",
+      details: ["3–5×12–20 reps", "🔁 Mon–Fri"]
+    },
+    {
+      title: "HIIT / Brisk walking / Jogging / Stairs",
+      details: ["20–45 min", "🔁 Tue, Thu, Sat (adjust if needed)"]
+    },
+    {
+      title: "Stretching / Flexibility",
+      details: [
+        "Hip flexor stretch 60s each side",
+        "Hamstring stretch 60–90s each leg",
+        "Adductor/straddle stretch 60–90s",
+        "Half splits hold 30–60s ×2–3",
+        "Front splits practice 20–45s ×2–3 each leg",
+        "Middle splits prep 60–90s",
+        "🔁 Daily"
+      ]
+    }
+  ],
+
+  "Diet / Meals": [
+    {
+      title: "Meal 1",
+      details: ["Protein + carb (eggs, yogurt, oatmeal, toast, fruit)", "🔁 Daily"]
+    },
+    {
+      title: "Meal 2",
+      details: ["Protein + carb + veggie (chicken, fish, rice, potato, frozen veggies)", "🔁 Daily"]
+    },
+    {
+      title: "Meal 3",
+      details: ["Post-workout protein (protein shake, yogurt, eggs, leftover meat) + optional carb", "🔁 Daily"]
+    },
+    {
+      title: "Meal 4",
+      details: ["Dinner protein + light carb or veggies (fish, chicken, potato, vegetables)", "🔁 Daily"]
+    },
+    {
+      title: "Optional snack",
+      details: ["Yogurt (2 tbsp max), fruit, peanut butter, protein shake", "🔁 Daily"]
+    },
+    {
+      title: "Hydration",
+      details: ["Drink water 64–100 oz daily", "🔁 Daily"]
+    }
+  ]
+};
+
 
   const todayKey = new Date().toDateString();
 
@@ -54,21 +110,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- RENDER CHECKLIST ---
   const checklist = document.getElementById("checklist");
-  Object.entries(DATA).forEach(([section, items]) => {
-    const sec = document.createElement("section");
-    sec.innerHTML = `<h2>${section}</h2>`;
-    items.forEach(item => {
-      const id = `${section}-${item}`;
-      const checked = localStorage.getItem(id) === "true";
-      sec.innerHTML += `
-        <label>
-          <input type="checkbox" id="${id}" ${checked ? "checked" : ""}>
-          ${item}
-        </label>
-      `;
-    });
-    checklist.appendChild(sec);
+
+Object.entries(DATA).forEach(([section, items]) => {
+  const sec = document.createElement("section");
+  sec.innerHTML = `<h2>${section}</h2>`;
+
+  items.forEach(item => {
+    const id = `${section}-${item.title}`;
+    const checked = localStorage.getItem(id) === "true";
+
+    const itemDiv = document.createElement("div");
+    itemDiv.innerHTML = `
+      <label>
+        <input type="checkbox" id="${id}" ${checked ? "checked" : ""}>
+        ${item.title}
+      </label>
+      <ul class="details">
+        ${item.details.map(d => `<li>${d}</li>`).join("")}
+      </ul>
+    `;
+    sec.appendChild(itemDiv);
   });
+
+  checklist.appendChild(sec);
+});
+
 
   // --- CHECKBOX SAVE ---
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
