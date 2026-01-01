@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- DATA ---
   const DATA = {
+  // Body / Workouts
   "Body / Workouts": [
     {
       title: "Morning warm-up",
@@ -64,31 +65,55 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ],
 
+  // Diet / Meals
   "Diet / Meals": [
-    {
-      title: "Meal 1",
-      details: ["Protein + carb (eggs, yogurt, oatmeal, toast, fruit)", "🔁 Daily"]
-    },
-    {
-      title: "Meal 2",
-      details: ["Protein + carb + veggie (chicken, fish, rice, potato, frozen veggies)", "🔁 Daily"]
-    },
-    {
-      title: "Meal 3",
-      details: ["Post-workout protein (protein shake, yogurt, eggs, leftover meat) + optional carb", "🔁 Daily"]
-    },
-    {
-      title: "Meal 4",
-      details: ["Dinner protein + light carb or veggies (fish, chicken, potato, vegetables)", "🔁 Daily"]
-    },
-    {
-      title: "Optional snack",
-      details: ["Yogurt (2 tbsp max), fruit, peanut butter, protein shake", "🔁 Daily"]
-    },
-    {
-      title: "Hydration",
-      details: ["Drink water 64–100 oz daily", "🔁 Daily"]
-    }
+    { title: "Meal 1", details: ["Protein + carb (eggs, yogurt, oatmeal, toast, fruit)", "🔁 Daily"] },
+    { title: "Meal 2", details: ["Protein + carb + veggie (chicken, fish, rice, potato, frozen veggies)", "🔁 Daily"] },
+    { title: "Meal 3", details: ["Post-workout protein (protein shake, yogurt, eggs, leftover meat) + optional carb", "🔁 Daily"] },
+    { title: "Meal 4", details: ["Dinner protein + light carb or veggies (fish, chicken, potato, vegetables)", "🔁 Daily"] },
+    { title: "Optional snack", details: ["Yogurt (2 tbsp max), fruit, peanut butter, protein shake", "🔁 Daily"] },
+    { title: "Hydration", details: ["Drink water (64–100 oz daily)", "🔁 Daily"] }
+  ],
+
+  // Hair / 4C Buzz Cut Care
+  "Hair / 4C Buzz Cut Care": [
+    { title: "Scalp massage", details: ["3–5 min (with/without oil)", "🔁 Daily"] },
+    { title: "Moisturize & seal", details: ["With water or leave-in + seal with oil", "🔁 Daily"] },
+    { title: "Sleep care", details: ["Sleep on satin pillowcase / wear durag", "🔁 Daily"] },
+    { title: "Deep cleanse scalp", details: ["Gentle shampoo or co-wash", "🔁 Weekly"] },
+    { title: "Protein / strengthening treatment", details: ["Every 3–4 weeks"] },
+    { title: "Trim split ends", details: ["If grown 2–3 inches", "🔁 Monthly"] },
+    { title: "Adjust products/oils", details: ["If scalp is too dry/oily", "🔁 Monthly"] }
+  ],
+
+  // Hygiene / Personal Care
+  "Hygiene / Personal Care": [
+    { title: "Brush teeth + floss", details: ["2–3 min", "🔁 Daily"] },
+    { title: "Mouthwash", details: ["Optional", "🔁 Daily"] },
+    { title: "Shower", details: ["With soap & shampoo/conditioner", "🔁 Daily"] },
+    { title: "Deodorant / antiperspirant", details: ["🔁 Daily"] },
+    { title: "Face wash + moisturizer", details: ["With SPF in morning", "🔁 Daily"] },
+    { title: "Comb/brush hair", details: ["Trim facial hair", "🔁 Daily"] },
+    { title: "Trim nails & wash hands", details: ["🔁 Daily"] },
+    { title: "Deep hair exfoliation", details: ["🔁 Weekly"] },
+    { title: "Foot care", details: ["Soak & scrub", "🔁 Weekly"] },
+    { title: "Haircut", details: ["🔁 Monthly"] },
+    { title: "Facial mask / deep clean", details: ["🔁 Monthly"] },
+    { title: "Teeth whitening", details: ["🔁 Monthly"] }
+  ],
+
+  // Microwave Yogurt Strategy
+  "Microwave-Yogurt Strategy": [
+    { title: "Measure yogurt", details: ["2 tbsp Greek yogurt per day", "🔁 Daily"] },
+    { title: "Mix yogurt", details: ["Into oatmeal, eggs, fruit, or use as dip/sauce", "🔁 Daily"] }
+  ],
+
+  // Daily Reminders / Mindset
+  "Daily Reminders / Mindset": [
+    { title: "Engage core", details: ["Throughout day", "🔁 Daily"] },
+    { title: "Posture check", details: ["Chest up, shoulders back", "🔁 Daily"] },
+    { title: "Track weekly progress photos", details: ["Abs, arms, ass, splits", "🔁 Weekly"] },
+    { title: "Adjust meals / protein", details: ["Based on activity level", "🔁 Daily"] }
   ]
 };
 
