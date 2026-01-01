@@ -112,10 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   checkNotificationPermission();
 
-  enableBtn.onclick = async () => {
-    const permission = await Notification.requestPermission();
+  enableBtn.onclick = () => {
+  Notification.requestPermission().then(permission => {
     if (permission === "granted") notifModal.classList.add("notif-hidden");
-  };
+  });
+};
+
   skipBtn.onclick = () => {
     localStorage.setItem("notifSkipped", todayKey);
     notifModal.classList.add("notif-hidden");
