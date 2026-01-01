@@ -1,4 +1,4 @@
-{
+{ 
   "name": "2026 New Year Challenge",
   "short_name": "2026 NY Challenge",
   "start_url": ".",
@@ -7,7 +7,7 @@
   "theme_color": "#00ff88",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "favicon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
