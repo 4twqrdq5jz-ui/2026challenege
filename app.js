@@ -92,6 +92,43 @@ document.addEventListener("DOMContentLoaded", () => {
   ]
 };
 
+const NOTIF_SCHEDULE = [
+  // Workouts
+  {
+    items: ["Morning warm-up", "Core routine", "Balance drills"],
+    hour: 6
+  },
+  {
+    items: ["Squats", "Glute bridges", "Wall sits", "Lunges"],
+    hour: 7
+  },
+  {
+    items: ["Dips (chairs/bench)", "Arm curls (weighted items)", "Chest fly (weighted)", "Reverse flies / rows / shrugs for shoulders/back"],
+    hour: 8
+  },
+  {
+    items: ["HIIT / Brisk walking / Jogging / Stairs"],
+    hour: 9
+  },
+  {
+    items: [
+      "Hip flexor stretch 60s each side",
+      "Hamstring stretch 60–90s each leg",
+      "Adductor/straddle stretch 60–90s",
+      "Half splits hold 30–60s ×2–3",
+      "Front splits practice 20–45s ×2–3 each leg",
+      "Middle splits prep 60–90s"
+    ],
+    hour: 10
+  },
+
+  // Meals
+  { items: ["Meal 1: Protein + carb (eggs, yogurt, oatmeal, toast, fruit)"], hour: 7, minute: 30 },
+  { items: ["Meal 2: Protein + carb + veggie (chicken, fish, rice, potato, frozen veggies)"], hour: 12, minute: 15 },
+  { items: ["Meal 3: Post-workout protein + optional carb"], hour: 14, minute: 0 },
+  { items: ["Meal 4: Dinner protein + light carb or veggies (fish, chicken, potato, vegetables)"], hour: 20, minute: 30 }
+];
+
 
   const todayKey = new Date().toDateString();
 
@@ -213,6 +250,46 @@ skipBtn.onclick = () => {
   // Remove modal immediately
   notifModal.remove();
 };
+
+function scheduleNotifications() {
+  if (!("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
+
+  const now = new Date();
+
+  NOTIF_SCHEDULE.forEach(group => {
+    group.items.forEach(item => {
+      const notifTime = new Date();
+      notifTime.setHours(group.hour || 0, group.minute || 0, 0, 0); // hour + optional minute
+
+      // Skip if time already passed
+      if (notifTime <= now) return;
+
+      const timeout = notifTime.getTime() - now.getTime();
+
+      setTimeout(() => {
+        new Notification("⏰ Reminder", {
+          body: item,
+          icon: "" // optional: path to icon
+        });
+      }, timeout);
+    });
+  });
+}
+
+if (Notification.permission === "granted") {
+  scheduleNotifications();
+}
+
+enableBtn.onclick = () => {
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      notifModal.remove();
+      scheduleNotifications();
+    }
+  });
+};
+
 
   // --- WEEKLY PHOTO UPLOAD ---
   const photoInput = document.getElementById("photoInput");
