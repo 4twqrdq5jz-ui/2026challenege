@@ -108,16 +108,23 @@ function checkNotificationPermission() {
   if (!("Notification" in window)) return;
 
   const skippedDay = localStorage.getItem("notifSkipped");
-  const todayKey = new Date().toDateString();
 
   if (Notification.permission === "granted") {
-    // Notifications already allowed — hide modal permanently
+    // Notifications already allowed — remove modal permanently
     notifModal.remove();
     return;
   }
 
+  // Only show if not skipped today
   if (Notification.permission === "default" && skippedDay !== todayKey) {
     notifModal.classList.remove("notif-hidden");
+
+    // Auto-remove after 10 seconds
+    setTimeout(() => {
+      if (!localStorage.getItem("notifSkipped")) {
+        notifModal.remove();
+      }
+    }, 10000);
   }
 }
 
@@ -127,7 +134,7 @@ checkNotificationPermission();
 enableBtn.onclick = () => {
   Notification.requestPermission().then(permission => {
     if (permission === "granted") {
-      // Remove modal completely after allowing
+      // Remove modal permanently
       notifModal.remove();
     }
   });
@@ -135,10 +142,11 @@ enableBtn.onclick = () => {
 
 // Skip for today
 skipBtn.onclick = () => {
-  localStorage.setItem("notifSkipped", new Date().toDateString());
-  notifModal.classList.add("notif-hidden");
+  // Save skip for today
+  localStorage.setItem("notifSkipped", todayKey);
+  // Remove modal immediately
+  notifModal.remove();
 };
-
 
   // --- WEEKLY PHOTO UPLOAD ---
   const photoInput = document.getElementById("photoInput");
