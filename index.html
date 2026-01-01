@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>New Year / New Me</title>
+  <title>2026 New Year Challenge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
@@ -14,11 +14,41 @@
   <p class="subtitle">Daily discipline. No excuses.</p>
 </header>
 
+<div id="streakBox">
+  <p>🔥 Current Streak: <span id="streak">0</span> days</p>
+  <p>🏆 Best Streak: <span id="bestStreak">0</span> days</p>
+</div>
+
 <main id="checklist"></main>
+
+<section>
+  <h2>📸 Weekly Progress</h2>
+  <input type="file" id="photoInput" accept="image/*">
+  <div id="photoGallery"></div>
+</section>
 
 <footer>
   <button id="saveDay">✅ Complete Today</button>
 </footer>
+
+<div id="notifModal" class="notif-hidden">
+  <div class="notif-box">
+    <h2>🔔 Enable Notifications</h2>
+    <p>
+      Daily check-ins are mandatory.<br>
+      Notifications keep you accountable.
+    </p>
+    <button id="enableNotif">Enable</button>
+    <button id="skipNotif">Not now</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+</script>
 
 <script src="app.js"></script>
 </body>
